@@ -35,13 +35,15 @@ SETUP.md                 ← What to install before each phase
 README.md                ← You are here
 ```
 
-Each guide is a complete, self-contained Markdown file that renders natively on GitHub. You do not need the internet — every concept is explained inline, right before you need to apply it. Each day follows the same rhythm:
+Each guide is a complete Markdown file that renders natively on GitHub. Every core concept is explained inline with code examples, right before you need to apply it. Each day follows the same rhythm:
 
 1. **Reading** — theory with inline code examples
 2. **Build** — apply the concept to the Nexus project
 3. **Review** — a checklist to confirm mastery, then a quiz
+4. **Exercises** — three graded exercises (easy / medium / challenge) with hidden solutions
+5. **Further Reading** — two curated external links for deeper exploration after the session
 
-Do not skip the quiz. If you get a question wrong, reread the section before moving on.
+Do not skip the quiz. If you get a question wrong, reread the section before moving on. The Further Reading links are optional — the guides are fully usable offline; the links are there when you want to go deeper.
 
 ---
 

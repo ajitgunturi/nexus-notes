@@ -1,8 +1,12 @@
-# Introduction to Phase 1
+# Phase 1: CLI File Manager
+
+> **Phase 1 of 4** | Duration: 18 days (~54 hours) | Prerequisites: None
 
 Over the next 18 days you will build a fully functional command-line note manager in Python. You will go from zero programming knowledge to writing tested, version-controlled, well-structured code. By the end, Nexus will create, search, tag, and export notes with data persisted to disk, a proper test suite, and clean architecture.
 
 Each day is a 3-hour session with three sections: Reading (concept theory with inline examples), Build (apply the concept to Nexus), and Review (checklist + quiz). Do not skip the quizzes — if you get a question wrong, reread the section before moving on.
+
+---
 
 # Day 1: Your Development Environment
 
@@ -69,7 +73,7 @@ Run it: python nexus.py
 
 > **💡 Line-by-Line Breakdown**
 >
-> # starts a comment (ignored by Python). print() displays text. input() pauses for user input and returns a string. The f before a string creates an f-string where {name} is replaced by the variable’s value.
+> `#` starts a comment (ignored by Python). print() displays text. input() pauses for user input and returns a string. The f before a string creates an f-string where {name} is replaced by the variable’s value.
 
 ## Reading: Variables and Data Types
 
@@ -100,7 +104,7 @@ print(type(age))      # <class 'int'>
 
 ### String Operations
 
-```
+```python
 "Hello" + " " + "World"     # "Hello World" (concatenation)
 "ha" * 3                     # "hahaha" (repetition)
 len("Nexus")                 # 5 (length)
@@ -116,7 +120,7 @@ len("Nexus")                 # 5 (length)
 
 input() ALWAYS returns a string. To do math with it, you must convert:
 
-```
+```python
 user_input = input("Number: ")  # e.g. "42" (a string!)
 number = int(user_input)         # integer 42
 decimal = float(user_input)      # float 42.0
@@ -156,36 +160,137 @@ print(f"Python: {sys.version}")
 - [ ] I understand input() returns str and how to cast types
 - [ ] I know f-strings, comments (#), naming conventions
 
-> **🧠 Quiz**
->
-> **Q1: What does 'pwd' do?**
-> A) Print working directory
-> B) Prompt for password
-> C) Power down
-> D) Create file
-> ✅ Answer: A — Print Working Directory.
->
-> **Q2: What type does input() return?**
-> A) int
-> B) float
-> C) str
-> D) Depends on input
-> ✅ Answer: C — Always a string.
->
-> **Q3: What is 10 // 3?**
-> A) 3.33
-> B) 3
-> C) 4
-> D) 1
-> ✅ Answer: B — Floor division rounds down.
->
-> **Q4: Why use ALL_CAPS for VERSION?**
-> A) Python requires it
-> B) Convention: value should not change
-> C) Makes it faster
-> D) Required for f-strings
-> ✅ Answer: B — Convention for constants.
->
+### Quiz
+
+**Q1: What does 'pwd' do?**
+
+- A) Print working directory
+- B) Prompt for password
+- C) Power down
+- D) Create file
+
+<details><summary>Answer</summary>
+
+**A** — Print Working Directory.
+
+</details>
+
+**Q2: What type does input() return?**
+
+- A) int
+- B) float
+- C) str
+- D) Depends on input
+
+<details><summary>Answer</summary>
+
+**C** — Always a string.
+
+</details>
+
+**Q3: What is 10 // 3?**
+
+- A) 3.33
+- B) 3
+- C) 4
+- D) 1
+
+<details><summary>Answer</summary>
+
+**B** — Floor division rounds down.
+
+</details>
+
+**Q4: Why use ALL_CAPS for VERSION?**
+
+- A) Python requires it
+- B) Convention: value should not change
+- C) Makes it faster
+- D) Required for f-strings
+
+<details><summary>Answer</summary>
+
+**B** — Convention for constants.
+
+</details>
+
+
+## Exercises
+
+1. **Predict the output.** What does this snippet print?
+
+```python
+x = 10
+y = 3
+print(x / y)
+print(x // y)
+print("ha" * y)
+print("Nexus"[1] + "Nexus"[-1])
+```
+
+<details><summary>Solution</summary>
+
+```python
+x = 10
+y = 3
+print(x / y)                         # 3.3333333333333335 — / always returns float
+print(x // y)                        # 3 — floor division truncates decimal
+print("ha" * y)                      # hahaha — string repetition
+print("Nexus"[1] + "Nexus"[-1])      # "e" + "s" = "es" — indexing
+```
+
+</details>
+
+2. **Input and f-strings.** Write a program that asks for the user's name and birth year, then prints their approximate age using an f-string. Use `int()` to convert the year.
+
+```
+Name: Alice
+Birth year: 1995
+Alice, you are approximately 31 years old.
+```
+
+<details><summary>Solution</summary>
+
+```python
+name = input("Name: ")
+birth_year = int(input("Birth year: "))
+age = 2026 - birth_year
+print(f"{name}, you are approximately {age} years old.")
+```
+
+</details>
+
+3. **Fix the bug.** The following code crashes. Identify why, then fix it so it prints a helpful message instead.
+
+```python
+user_input = "hello"
+number = int(user_input)
+print(f"Double: {number * 2}")
+```
+
+<details><summary>Solution</summary>
+
+`int("hello")` raises a `ValueError` — "hello" is not a valid integer. Before Day 7 teaches `try/except`, use `.isdigit()` to guard the conversion:
+
+```python
+user_input = "hello"
+if user_input.isdigit():
+    number = int(user_input)
+    print(f"Double: {number * 2}")
+else:
+    print(f"'{user_input}' is not a valid number.")
+```
+
+Output: `'hello' is not a valid number.`
+
+</details>
+
+## Further Reading
+
+- [The Python Tutorial (official)](https://docs.python.org/3/tutorial/) — the definitive starting point, written by Python's creators.
+- [Built-in Types Reference](https://docs.python.org/3/library/stdtypes.html) — complete documentation for `str`, `int`, `float`, `list`, `dict`, and more.
+
+---
 
 # Day 2: Control Flow — Making Decisions
 
@@ -320,29 +425,134 @@ while True:
 - [ ] I know what break and continue do
 - [ ] Nexus has an interactive menu that loops until exit
 
-> **🧠 Quiz**
->
-> **Q1: What is: not (5 > 3 and 2 < 1)?**
-> A) True
-> B) False
-> C) Error
-> D) None
-> ✅ Answer: A — 5>3=True, 2<1=False. True and False = False. not False = True.
->
-> **Q2: What does range(2, 8, 2) produce?**
-> A) 2, 4, 6
-> B) 2, 4, 6, 8
-> C) 2, 3, 4, 5, 6, 7
-> D) 8, 6, 4, 2
-> ✅ Answer: A — Start=2, stop before 8, step=2.
->
-> **Q3: What happens with: while True: break?**
-> A) Infinite loop
-> B) Runs once, then exits
-> C) Error
-> D) Never enters the loop
-> ✅ Answer: B — Enters loop, hits break immediately, exits.
->
+### Quiz
+
+**Q1: What is: not (5 > 3 and 2 < 1)?**
+
+- A) True
+- B) False
+- C) Error
+- D) None
+
+<details><summary>Answer</summary>
+
+**A** — 5>3=True, 2<1=False. True and False = False. not False = True.
+
+</details>
+
+**Q2: What does range(2, 8, 2) produce?**
+
+- A) 2, 4, 6
+- B) 2, 4, 6, 8
+- C) 2, 3, 4, 5, 6, 7
+- D) 8, 6, 4, 2
+
+<details><summary>Answer</summary>
+
+**A** — Start=2, stop before 8, step=2.
+
+</details>
+
+**Q3: What happens with: while True: break?**
+
+- A) Infinite loop
+- B) Runs once, then exits
+- C) Error
+- D) Never enters the loop
+
+<details><summary>Answer</summary>
+
+**B** — Enters loop, hits break immediately, exits.
+
+</details>
+
+**Q4: What is the output of `print(bool(0))`?**
+
+- A) True
+- B) False
+- C) Error
+- D) None
+
+<details><summary>Answer</summary>
+
+**B** — 0 is falsy. Other falsy values: `""`, `[]`, `{}`, `None`.
+
+</details>
+
+**Q5: Which keyword exits a loop immediately?**
+
+- A) exit
+- B) stop
+- C) break
+- D) return
+
+<details><summary>Answer</summary>
+
+**C** — `break` exits the nearest enclosing loop. `return` exits the entire function.
+
+</details>
+
+
+## Exercises
+
+1. **Predict the output.** What does this print when `score = 75`?
+
+```python
+score = 75
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+print(f"Score: {score}, Grade: {grade}")
+```
+
+<details><summary>Solution</summary>
+
+`Score: 75, Grade: C` — Python checks top-to-bottom. `75 >= 70` is the first True condition; all remaining branches are skipped.
+
+</details>
+
+2. **Countdown.** Write a `while` loop that counts down from 10 to 1, then prints `"Blastoff!"`.
+
+<details><summary>Solution</summary>
+
+```python
+count = 10
+while count >= 1:
+    print(count)
+    count -= 1
+print("Blastoff!")
+```
+
+</details>
+
+3. **Even numbers only.** Write a `for` loop over `range(1, 21)` that prints only even numbers. Use `continue` to skip odd ones.
+
+<details><summary>Solution</summary>
+
+```python
+for i in range(1, 21):
+    if i % 2 != 0:
+        continue
+    print(i)
+```
+
+`i % 2 != 0` is True for odd numbers. `continue` jumps to the next iteration, so only even numbers reach `print()`.
+
+</details>
+
+## Further Reading
+
+- [Python Control Flow (official docs)](https://docs.python.org/3/tutorial/controlflow.html) — covers if/elif/else, for loops, break, continue, and range() with examples from Python's creators.
+- [Truthy and Falsy Values (Real Python)](https://realpython.com/python-boolean/) — explains why `bool(0)`, `bool([])`, `bool(None)`, and `bool("")` are all `False`, and when this matters in conditions.
+
+---
 
 # Day 3: Collections — Lists, Dicts, and Tuples
 
@@ -352,7 +562,7 @@ Today you learn to store multiple values. Nexus starts managing a list of notes.
 
 A list is an ordered, mutable (changeable) collection. Created with square brackets:
 
-```
+```python
 fruits = ["apple", "banana", "cherry"]
 numbers = [1, 2, 3, 4, 5]
 mixed = [1, "hello", 3.14, True]  # Can hold different types
@@ -361,7 +571,7 @@ empty = []
 
 Items are accessed by index, starting from 0 (zero-based indexing):
 
-```
+```python
 fruits[0]      # "apple" (first)
 fruits[-1]     # "cherry" (last)
 fruits[1:3]    # ["banana", "cherry"] (slice: start inclusive, end exclusive)
@@ -405,13 +615,55 @@ for key, value in note.items():  # Iterate
 
 A tuple is like a list but immutable — once created, it cannot be changed. Use parentheses:
 
-```
+```python
 coordinates = (42.36, -71.06)
 coordinates[0]     # 42.36
 # coordinates[0] = 50  # ERROR! Cannot modify tuples
 ```
 
 Use tuples for data that should never change: coordinates, database rows, function return values.
+
+## Reading: List Comprehensions
+
+A list comprehension creates a new list by transforming and/or filtering an existing iterable — all in one expression.
+
+**Syntax:**
+
+```python
+[expression for item in iterable if condition]
+```
+
+This is equivalent to:
+
+```python
+result = []
+for item in iterable:
+    if condition:
+        result.append(expression)
+```
+
+**Example 1 — Square numbers:**
+
+```python
+squares = [x ** 2 for x in range(6)]
+print(squares)  # [0, 1, 4, 9, 16, 25]
+```
+
+**Example 2 — Filter notes by tag:**
+
+```python
+notes = [
+    {"title": "Meeting",  "tags": ["work"]},
+    {"title": "Groceries","tags": ["personal"]},
+    {"title": "Deadline", "tags": ["work", "urgent"]},
+]
+work_titles = [n["title"] for n in notes if "work" in n["tags"]]
+print(work_titles)  # ['Meeting', 'Deadline']
+```
+
+> **💡 One-Liner Power**
+>
+> List comprehensions are powerful but readability comes first. If the expression or condition doesn't fit comfortably on one line, use a regular `for` loop instead. Compact is only good when it's still obvious.
 
 ## Build: Nexus Manages Notes
 
@@ -453,29 +705,119 @@ def list_notes():
 - [ ] I understand tuples and when to use them
 - [ ] Nexus stores notes as dicts in a list
 
-> **🧠 Quiz**
->
-> **Q1: What is [1,2,3][1:]?**
-> A) [1, 2]
-> B) [2, 3]
-> C) [1]
-> D) [2]
-> ✅ Answer: B — Slice from index 1 to end.
->
-> **Q2: What happens with dict['missing_key']?**
-> A) Returns None
-> B) Returns ''
-> C) KeyError
-> D) Creates the key
-> ✅ Answer: C — KeyError. Use .get() for safe access.
->
-> **Q3: Can you append to a tuple?**
-> A) Yes
-> B) No, tuples are immutable
-> C) Only with .extend()
-> D) Only numbers
-> ✅ Answer: B — Tuples cannot be changed after creation.
->
+### Quiz
+
+**Q1: What is [1,2,3][1:]?**
+
+- A) [1, 2]
+- B) [2, 3]
+- C) [1]
+- D) [2]
+
+<details><summary>Answer</summary>
+
+**B** — Slice from index 1 to end.
+
+</details>
+
+**Q2: What happens with dict['missing_key']?**
+
+- A) Returns None
+- B) Returns ''
+- C) KeyError
+- D) Creates the key
+
+<details><summary>Answer</summary>
+
+**C** — KeyError. Use .get() for safe access.
+
+</details>
+
+**Q3: Can you append to a tuple?**
+
+- A) Yes
+- B) No, tuples are immutable
+- C) Only with .extend()
+- D) Only numbers
+
+<details><summary>Answer</summary>
+
+**B** — Tuples cannot be changed after creation.
+
+</details>
+
+**Q4: What does `[x*2 for x in range(4)]` produce?**
+
+- A) [0, 2, 4, 6]
+- B) [2, 4, 6, 8]
+- C) [1, 2, 3, 4]
+- D) Error
+
+<details><summary>Answer</summary>
+
+**A** — `range(4)` gives 0, 1, 2, 3. Doubled: 0, 2, 4, 6.
+
+</details>
+
+
+## Exercises
+
+1. **Comprehension filter.** Given `numbers = [3, 18, 7, 25, 2, 11, 9, 14]`, use a list comprehension to produce only the values greater than 10.
+
+<details><summary>Solution</summary>
+
+```python
+numbers = [3, 18, 7, 25, 2, 11, 9, 14]
+big = [n for n in numbers if n > 10]
+print(big)  # [18, 25, 11, 14]
+```
+
+</details>
+
+2. **Word lengths.** Given `"the quick brown fox"`, build a dict mapping each word to its length.
+
+```
+{'the': 3, 'quick': 5, 'brown': 5, 'fox': 3}
+```
+
+<details><summary>Solution</summary>
+
+```python
+sentence = "the quick brown fox"
+word_lengths = {word: len(word) for word in sentence.split()}
+print(word_lengths)
+```
+
+This is a **dict comprehension** — same idea, with `{key: value for ...}` syntax.
+
+</details>
+
+3. **Filter notes by tag.** Write `find_by_tag(notes, tag)` that returns a list of titles for notes containing the given tag.
+
+```python
+notes = [
+    {"title": "Standup",      "tags": ["work", "daily"]},
+    {"title": "Buy milk",     "tags": ["personal"]},
+    {"title": "Sprint review","tags": ["work"]},
+]
+print(find_by_tag(notes, "work"))  # ['Standup', 'Sprint review']
+```
+
+<details><summary>Solution</summary>
+
+```python
+def find_by_tag(notes, tag):
+    return [note["title"] for note in notes if tag in note["tags"]]
+```
+
+</details>
+
+## Further Reading
+
+- [Python Data Structures Tutorial](https://docs.python.org/3/tutorial/datastructures.html) — official guide to lists, list comprehensions, tuples, sets, and dicts.
+- [Mapping Types — dict](https://docs.python.org/3/library/stdtypes.html#mapping-types-dict) — complete reference for all dictionary methods.
+
+---
 
 # Day 4: Functions — Organizing Your Code
 
@@ -534,6 +876,44 @@ def increment():
     return count + 1 # can READ global
 # print(local_var)  # ERROR! Does not exist outside
 ```
+
+### *args and **kwargs
+
+Sometimes you need a function that accepts a flexible number of arguments.
+
+`*args` collects extra positional arguments into a **tuple**:
+
+```python
+def add_tags(note_title, *tags):
+    print(f"Note: {note_title}, Tags: {tags}")
+
+add_tags("Meeting", "work", "urgent", "q1")
+# Note: Meeting, Tags: ('work', 'urgent', 'q1')
+```
+
+`**kwargs` collects extra keyword arguments into a **dict**:
+
+```python
+def create_record(title, **metadata):
+    print(f"Title: {title}, Meta: {metadata}")
+
+create_record("Sprint Notes", author="Alice", priority="high")
+# Title: Sprint Notes, Meta: {'author': 'Alice', 'priority': 'high'}
+```
+
+You can use both together. Order must be: regular params → `*args` → `**kwargs`:
+
+```python
+def flexible(required, *args, **kwargs):
+    print(required, args, kwargs)
+
+flexible("hello", 1, 2, debug=True)
+# hello (1, 2) {'debug': True}
+```
+
+> **💡 When Do You See These?**
+>
+> You'll encounter `*args` and `**kwargs` most often in library code and decorators (Day 15). The `wrapper(*args, **kwargs)` pattern inside a decorator means "accept whatever the original function accepts and pass it through unchanged."
 
 ## Build: Refactored Nexus
 
@@ -605,24 +985,140 @@ if __name__ == "__main__":
 - [ ] I know docstrings and the __name__ guard
 - [ ] Nexus is refactored into clean functions
 
-> **🧠 Quiz**
->
-> **Q1: What returns from a function with no return statement?**
-> A) 0
-> B) ""
-> C) None
-> D) Error
-> ✅ Answer: C — Implicit return is None.
->
-> **Q2: Why is def f(items=[]) dangerous?**
-> A) Lists can't be params
-> B) Same list shared across calls
-> C) Syntax error
-> D) Slower
-> ✅ Answer: B — Default list created once, shared across all calls.
->
+### Quiz
 
-# Day 5: Git — Your Code’s Time Machine
+**Q1: What returns from a function with no return statement?**
+
+- A) 0
+- B) ""
+- C) None
+- D) Error
+
+<details><summary>Answer</summary>
+
+**C** — Implicit return is None.
+
+</details>
+
+**Q2: Why is def f(items=[]) dangerous?**
+
+- A) Lists can't be params
+- B) Same list shared across calls
+- C) Syntax error
+- D) Slower
+
+<details><summary>Answer</summary>
+
+**B** — Default list created once, shared across all calls.
+
+</details>
+
+**Q3: What does `*args` give you inside a function?**
+
+- A) A list
+- B) A tuple
+- C) A dict
+- D) A set
+
+<details><summary>Answer</summary>
+
+**B** — `*args` collects extra positional arguments into a tuple.
+
+</details>
+
+**Q4: What is the scope of a variable defined inside a function?**
+
+- A) Global
+- B) Local only
+- C) Module
+- D) Session
+
+<details><summary>Answer</summary>
+
+**B** — Local only. It ceases to exist when the function returns.
+
+</details>
+
+
+## Exercises
+
+1. **Word frequency counter.** Write `word_count(text)` that returns a dict mapping each lowercased word to how many times it appears.
+
+```python
+print(word_count("the cat sat on the mat"))
+# {'the': 2, 'cat': 1, 'sat': 1, 'on': 1, 'mat': 1}
+```
+
+<details><summary>Solution</summary>
+
+```python
+def word_count(text):
+    counts = {}
+    for word in text.lower().split():
+        counts[word] = counts.get(word, 0) + 1
+    return counts
+```
+
+`counts.get(word, 0)` returns 0 if the word hasn't been seen yet, avoiding a `KeyError`.
+
+</details>
+
+2. **Tag truncator.** Write `truncate_tags(tags, max_tags=5)` that returns only the first `max_tags` items.
+
+```python
+print(truncate_tags(["a","b","c","d","e","f","g"]))       # ['a','b','c','d','e']
+print(truncate_tags(["a","b","c","d","e","f","g"], max_tags=3)) # ['a','b','c']
+print(truncate_tags(["a","b"]))                            # ['a','b']
+```
+
+<details><summary>Solution</summary>
+
+```python
+def truncate_tags(tags, max_tags=5):
+    return tags[:max_tags]
+```
+
+Slicing beyond the list length is safe — Python returns whatever is there.
+
+</details>
+
+3. **Mutable default bug.** The function below has the mutable default bug. Show what goes wrong, then write the fixed version.
+
+```python
+def add_item(item, items=[]):
+    items.append(item)
+    return items
+```
+
+<details><summary>Solution</summary>
+
+```python
+# The bug:
+print(add_item("a"))  # ['a']
+print(add_item("b"))  # ['a', 'b'] — expected ['b']!
+# Python creates [] once at definition. Every default call shares it.
+
+# The fix:
+def add_item(item, items=None):
+    if items is None:
+        items = []
+    items.append(item)
+    return items
+
+print(add_item("a"))  # ['a']
+print(add_item("b"))  # ['b'] — fresh list each call
+```
+
+</details>
+
+## Further Reading
+
+- [Defining Functions (Python Docs)](https://docs.python.org/3/tutorial/controlflow.html#defining-functions) — official coverage of parameters, default values, keyword arguments, and `*args`/`**kwargs`.
+- [Python Scope and the LEGB Rule (Real Python)](https://realpython.com/python-scope-legb-rule/) — deep dive into local, enclosing, global, and built-in scope with clear diagrams.
+
+---
+
+# Day 5: Git — Your Code's Time Machine
 
 Today you learn Git. Your Nexus project becomes a version-controlled repository.
 
@@ -649,7 +1145,7 @@ Use imperative mood, under 72 chars. Good: "Add note deletion feature". Bad: "fi
 
 ### The .gitignore File
 
-```python
+```text
 # .gitignore
 __pycache__/
 *.pyc
@@ -661,7 +1157,7 @@ venv/
 
 ## Build: Initialize Nexus Repo
 
-```python
+```bash
 git init
 git add .gitignore
 git commit -m "Add .gitignore"
@@ -689,22 +1185,104 @@ From now on: commit after every meaningful change, push regularly.
 - [ ] I write good commit messages in imperative mood
 - [ ] I created .gitignore and pushed to GitHub
 
-> **🧠 Quiz**
->
-> **Q1: What does 'git add' do?**
-> A) Commits changes
-> B) Stages files
-> C) Pushes to GitHub
-> D) Creates branch
-> ✅ Answer: B — Stages files for the next commit.
->
-> **Q2: What should NEVER be committed?**
-> A) Source code
-> B) .gitignore
-> C) API keys and passwords
-> D) README
-> ✅ Answer: C — Secrets never go in version control.
->
+### Quiz
+
+**Q1: What does 'git add' do?**
+
+- A) Commits changes
+- B) Stages files
+- C) Pushes to GitHub
+- D) Creates branch
+
+<details><summary>Answer</summary>
+
+**B** — Stages files for the next commit.
+
+</details>
+
+**Q2: What should NEVER be committed?**
+
+- A) Source code
+- B) .gitignore
+- C) API keys and passwords
+- D) README
+
+<details><summary>Answer</summary>
+
+**C** — Secrets never go in version control.
+
+</details>
+
+**Q3: What does `git diff` show?**
+
+- A) Committed changes
+- B) Unstaged changes between working directory and last commit
+- C) Differences between two branches
+- D) Remote vs local differences
+
+<details><summary>Answer</summary>
+
+**B** — `git diff` shows changes not yet staged. Use `git diff --staged` to see staged changes.
+
+</details>
+
+
+## Exercises
+
+1. **Two logical commits.** You changed these 5 files: `models.py` (added delete function), `cli.py` (added delete menu option), `storage.py` (fixed a save bug), `test_models.py` (added delete tests), `README.md` (updated feature list). Write git commands to commit them as two logical commits — one for the bug fix, one for the delete feature.
+
+<details><summary>Solution</summary>
+
+```bash
+# Commit 1: the bug fix (isolated change)
+git add storage.py
+git commit -m "Fix save bug in storage module"
+
+# Commit 2: the delete feature (related changes together)
+git add models.py cli.py test_models.py README.md
+git commit -m "Add note deletion feature with tests"
+```
+
+Group related changes into one commit. The bug fix is independent, so it gets its own.
+
+</details>
+
+2. **Good commit messages.** A developer wrote: `"I added the ability to delete notes and fixed a crash when title is empty"`. Rewrite this as two properly-formed commits.
+
+<details><summary>Solution</summary>
+
+```bash
+git commit -m "Fix crash when note title is empty"
+git commit -m "Add note deletion feature"
+```
+
+Rules applied: imperative mood, under 72 chars, one logical change per commit.
+
+</details>
+
+3. **Last 3 commits.** Write the command to show only the 3 most recent commits in oneline format.
+
+<details><summary>Solution</summary>
+
+```bash
+git log --oneline -3
+```
+
+The `-3` flag limits output to the 3 most recent commits. Output looks like:
+```
+a1b2c3d Add note deletion feature
+e4f5g6h Fix save bug in storage module
+i7j8k9l Add persistent JSON storage for notes
+```
+
+</details>
+
+## Further Reading
+
+- [Pro Git Book (free online)](https://git-scm.com/book) — the comprehensive guide to Git, from basics to advanced branching.
+- [GitHub Docs: Creating a Repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository) — step-by-step guide to setting up a GitHub repo.
+
+---
 
 # Day 6: File I/O — Persistence
 
@@ -795,22 +1373,122 @@ git commit -m "Add persistent JSON storage for notes"
 - [ ] Nexus persists notes to nexus_data.json
 - [ ] I split code into modules and used import
 
-> **🧠 Quiz**
->
-> **Q1: json.dump() vs json.dumps()?**
-> A) dump writes to file, dumps returns string
-> B) They're identical
-> C) dumps is safer
-> D) dump is for lists only
-> ✅ Answer: A
->
-> **Q2: Why use 'with open()' instead of plain open()?**
-> A) Faster
-> B) Auto-closes even on errors
-> C) Only way in Python 3
-> D) Encrypts data
-> ✅ Answer: B
->
+### Quiz
+
+**Q1: json.dump() vs json.dumps()?**
+
+- A) dump writes to file, dumps returns string
+- B) They're identical
+- C) dumps is safer
+- D) dump is for lists only
+
+<details><summary>Answer</summary>
+
+A
+
+</details>
+
+**Q2: Why use 'with open()' instead of plain open()?**
+
+- A) Faster
+- B) Auto-closes even on errors
+- C) Only way in Python 3
+- D) Encrypts data
+
+<details><summary>Answer</summary>
+
+B
+
+</details>
+
+**Q3: What is the difference between `json.load()` and `json.loads()`?**
+
+- A) They're identical
+- B) `load()` reads from a file object, `loads()` parses a string
+- C) `loads()` is faster
+- D) `load()` only works with lists
+
+<details><summary>Answer</summary>
+
+**B** — The `s` in `loads` stands for "string". Same pattern applies to `dump` vs `dumps`.
+
+</details>
+
+
+## Exercises
+
+1. **Read and count.** Create a text file with 5 lines, then write a Python script that reads it and prints the number of lines and the longest line.
+
+<details><summary>Solution</summary>
+
+```python
+# First, create the file:
+with open("sample.txt", "w") as f:
+    f.write("Hello world\nPython is great\nNexus\nFile I/O is easy\nDone\n")
+
+# Then read and analyse:
+with open("sample.txt", "r") as f:
+    lines = f.readlines()
+
+print(f"Lines: {len(lines)}")
+longest = max(lines, key=lambda l: len(l.strip()))
+print(f"Longest: {longest.strip()!r}")
+```
+
+</details>
+
+2. **Round-trip JSON.** Write a script that saves a list of two note dicts to `notes.json`, then reads it back and prints the title of each note.
+
+<details><summary>Solution</summary>
+
+```python
+import json
+
+notes = [
+    {"id": 1, "title": "Meeting", "tags": ["work"]},
+    {"id": 2, "title": "Groceries", "tags": ["personal"]},
+]
+
+with open("notes.json", "w") as f:
+    json.dump(notes, f, indent=2)
+
+with open("notes.json", "r") as f:
+    loaded = json.load(f)
+
+for note in loaded:
+    print(note["title"])
+```
+
+</details>
+
+3. **Safe load.** Modify `load_notes()` from the Build section so that if the file contains invalid JSON (corrupted data), it prints a warning and returns an empty list instead of crashing.
+
+<details><summary>Solution</summary>
+
+```python
+import json, os
+
+def load_notes(path="nexus_data.json"):
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except json.JSONDecodeError:
+        print("Warning: notes file is corrupted. Starting fresh.")
+        return []
+```
+
+`json.JSONDecodeError` is raised when the file exists but its contents aren't valid JSON.
+
+</details>
+
+## Further Reading
+
+- [Reading and Writing Files (Python Docs)](https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files) — official guide to file modes, `read()`, `readlines()`, and `with` context managers.
+- [json — JSON encoder and decoder (Python Docs)](https://docs.python.org/3/library/json.html) — complete reference for `dump`, `load`, `dumps`, `loads`, and all serialization options including `indent` and `default`.
+
+---
 
 # Days 7–8: Error Handling and Modules
 
@@ -863,7 +1541,97 @@ nexus/
 
 ## Build: Robust Nexus Package
 
-Restructure into the package layout above. Add try/except around all user inputs. Validate all data in models.py. Commit the restructure separately from the error handling.
+Restructure into the package layout above. Here is what each file should contain:
+
+**`nexus/__init__.py`**
+
+```python
+# Makes the nexus/ folder a Python package. Can be empty.
+```
+
+**`nexus/models.py`**
+
+```python
+from datetime import datetime
+
+def create_note(title, content="", tags=None):
+    """Create a note dict. Raises ValueError on invalid input."""
+    if not title or not title.strip():
+        raise ValueError("Title cannot be empty")
+    if len(title) > 200:
+        raise ValueError("Title cannot exceed 200 characters")
+    if tags is None:
+        tags = []
+    return {
+        "id": None,  # assigned by storage
+        "title": title.strip(),
+        "content": content,
+        "tags": tags,
+        "created_at": datetime.now().isoformat(),
+    }
+```
+
+**`nexus/storage.py`**
+
+```python
+import json
+
+DEFAULT_PATH = "nexus_data.json"
+
+def save_notes(notes, path=DEFAULT_PATH):
+    try:
+        with open(path, "w") as f:
+            json.dump(notes, f, indent=2)
+    except OSError as e:
+        print(f"Error saving notes: {e}")
+
+def load_notes(path=DEFAULT_PATH):
+    try:
+        with open(path, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []          # first run — no file yet
+    except json.JSONDecodeError:
+        print("Warning: notes file is corrupted. Starting fresh.")
+        return []
+```
+
+**`main.py`** (lives outside the `nexus/` package)
+
+```python
+from nexus.models import create_note
+from nexus.storage import load_notes, save_notes
+
+def main():
+    store = load_notes()
+    while True:
+        print("\n1.Add  2.List  3.Exit")
+        choice = input("Choice: ")
+        if choice == "1":
+            try:
+                title = input("Title: ")
+                note = create_note(title, input("Content: "))
+                note["id"] = len(store) + 1
+                store.append(note)
+                save_notes(store)
+                print(f"Created #{note['id']}")
+            except ValueError as e:
+                print(f"Invalid input: {e}")
+        elif choice == "2":
+            for n in store:
+                print(f"  [{n['id']}] {n['title']}")
+            if not store:
+                print("No notes yet.")
+        elif choice == "3":
+            break
+
+if __name__ == "__main__":
+    main()
+```
+
+> **💡 Commit Strategy**
+>
+> Make two commits: first the restructure (`git add nexus/ main.py && git commit -m "Restructure Nexus into a Python package"`), then the validation and error handling (`git commit -m "Add input validation and error handling"`). Keeping structural changes separate from behavioral ones makes the history easier to review.
 
 ## Review: Days 7–8
 
@@ -874,22 +1642,125 @@ Restructure into the package layout above. Add try/except around all user inputs
 - [ ] I know modules (.py files) vs packages (folders + __init__.py)
 - [ ] Nexus is a proper package with validated inputs
 
-> **🧠 Quiz**
->
-> **Q1: In what order are except blocks checked?**
-> A) Top to bottom (most specific first)
-> B) Alphabetical
-> C) Least specific first
-> D) Random
-> ✅ Answer: A — Put specific exceptions before general ones.
->
-> **Q2: What makes a folder a Python package?**
-> A) Having 3+ files
-> B) __init__.py file
-> C) Being in Python directory
-> D) setup.py file
-> ✅ Answer: B
->
+### Quiz
+
+**Q1: In what order are except blocks checked?**
+
+- A) Top to bottom (most specific first)
+- B) Alphabetical
+- C) Least specific first
+- D) Random
+
+<details><summary>Answer</summary>
+
+**A** — Put specific exceptions before general ones.
+
+</details>
+
+**Q2: What makes a folder a Python package?**
+
+- A) Having 3+ files
+- B) __init__.py file
+- C) Being in Python directory
+- D) setup.py file
+
+<details><summary>Answer</summary>
+
+B
+
+</details>
+
+**Q3: What does the `finally` block do?**
+
+- A) Runs only on error
+- B) Runs only on success
+- C) Always runs
+- D) Skips on KeyboardInterrupt
+
+<details><summary>Answer</summary>
+
+**C** — Always runs, even if an exception was raised or a `return` was hit inside `try/except`.
+
+</details>
+
+**Q4: What is the difference between `Exception` and `BaseException`?**
+
+- A) They're identical
+- B) `BaseException` includes `SystemExit` and `KeyboardInterrupt`
+- C) `Exception` is for syntax errors
+- D) `BaseException` is deprecated
+
+<details><summary>Answer</summary>
+
+**B** — `BaseException` is the root of all exceptions. Catching `Exception` is safer because it won't accidentally swallow Ctrl+C.
+
+</details>
+
+
+## Exercises
+
+1. **Safe input with retry.** Write a loop that asks the user for an integer. If the input is invalid, print an error and ask again. Give up after 3 attempts.
+
+<details><summary>Solution</summary>
+
+```python
+attempts = 3
+while attempts > 0:
+    try:
+        value = int(input("Enter a number: "))
+        print(f"You entered: {value}")
+        break
+    except ValueError:
+        attempts -= 1
+        if attempts > 0:
+            print(f"Invalid. Try again. ({attempts} attempt(s) left)")
+        else:
+            print("Too many invalid attempts.")
+```
+
+</details>
+
+2. **Custom exception.** Write a `NexusError` class that inherits from `Exception`, then a `validate_title(title)` function that raises it for empty input.
+
+<details><summary>Solution</summary>
+
+```python
+class NexusError(Exception):
+    pass
+
+def validate_title(title):
+    if not title or not title.strip():
+        raise NexusError("Title cannot be empty")
+    return title.strip()
+
+try:
+    validate_title("")
+except NexusError as e:
+    print(f"Caught: {e}")  # Caught: Title cannot be empty
+
+print(validate_title("  Hello  "))  # Hello
+```
+
+</details>
+
+3. **Fix the import.** You have `nexus/__init__.py` (empty) and `nexus/models.py` containing `def create_note(title): ...`. A user tries `from nexus.models import create_note` and gets an error. What are the three most likely causes?
+
+<details><summary>Solution</summary>
+
+1. **Wrong working directory** — you must run Python from the folder *containing* `nexus/`, not from inside it.
+2. **`__init__.py` is missing** — its presence is what makes `nexus/` a package.
+3. **Syntax error in `models.py`** — Python can't load the module if it has a syntax error.
+
+An empty `__init__.py` is sufficient for `from nexus.models import create_note` to work. No content needed unless you want to re-export at the package level (`from nexus import create_note`).
+
+</details>
+
+## Further Reading
+
+- [Errors and Exceptions (Python Docs)](https://docs.python.org/3/tutorial/errors.html) — covers built-in exceptions, try/except/else/finally, and how to define and raise custom exception classes.
+- [Modules (Python Docs)](https://docs.python.org/3/tutorial/modules.html) — the definitive guide to `import`, `__init__.py`, the module search path, and package namespaces.
+
+---
 
 # Days 9–10: Testing — Proving Your Code Works
 
@@ -929,9 +1800,55 @@ pytest -v        # verbose (shows each test name)
 pytest -k "empty"  # tests matching keyword
 ```
 
+## Reading: pytest Fixtures
+
+A **fixture** is a function that runs setup code before a test and provides its return value to the test function automatically.
+
+```python
+import pytest
+
+@pytest.fixture
+def note_store():
+    """Provide a fresh list with 2 notes for each test."""
+    return [
+        {"id": 1, "title": "First", "tags": ["work"]},
+        {"id": 2, "title": "Second", "tags": ["personal"]},
+    ]
+
+def test_store_has_two_notes(note_store):
+    assert len(note_store) == 2
+
+def test_first_note_title(note_store):
+    assert note_store[0]["title"] == "First"
+```
+
+Each test gets its own fresh copy — modifying `note_store` in one test does not affect another.
+
+### The `tmp_path` Built-in Fixture
+
+For file I/O tests, use `tmp_path` — a built-in pytest fixture that provides a temporary directory unique to each test run:
+
+```python
+import json
+
+def test_save_and_load(tmp_path):
+    filepath = tmp_path / "notes.json"
+    data = [{"title": "Test note"}]
+
+    with open(filepath, "w") as f:
+        json.dump(data, f)
+
+    with open(filepath, "r") as f:
+        loaded = json.load(f)
+
+    assert loaded == data
+```
+
+This never pollutes your real filesystem.
+
 ## Build: Nexus Test Suite
 
-Write tests for models.py (creation, validation, edge cases) and storage.py (save/load round-trip, missing file handling). Use tempfile for storage tests. Aim for at least 10 test functions.
+Write tests for models.py (creation, validation, edge cases) and storage.py (save/load round-trip, missing file handling). Use `tmp_path` for storage tests. Aim for at least 10 test functions.
 
 ## Review: Days 9–10
 
@@ -943,15 +1860,144 @@ Write tests for models.py (creation, validation, edge cases) and storage.py (sav
 - [ ] Nexus has tests for models and storage
 - [ ] I run tests before every commit
 
-> **🧠 Quiz**
->
-> **Q1: What happens when assert evaluates to False?**
-> A) Nothing
-> B) Test marked as failed
-> C) All tests stop
-> D) Warning printed
-> ✅ Answer: B — That test fails, others still run.
->
+### Quiz
+
+**Q1: What happens when assert evaluates to False?**
+
+- A) Nothing
+- B) Test marked as failed
+- C) All tests stop
+- D) Warning printed
+
+<details><summary>Answer</summary>
+
+**B** — That test fails, others still run.
+
+</details>
+
+**Q2: What naming convention does pytest use to discover test functions?**
+
+- A) `test_` prefix
+- B) `_test` suffix
+- C) Test class only
+- D) Any name
+
+<details><summary>Answer</summary>
+
+**A** — Functions must start with `test_` (or classes with `Test`) for pytest to find them.
+
+</details>
+
+**Q3: What does `pytest -k "empty"` do?**
+
+- A) Skips empty tests
+- B) Runs only tests whose name contains "empty"
+- C) Runs tests in empty files
+- D) Deletes empty test files
+
+<details><summary>Answer</summary>
+
+**B** — The `-k` flag filters tests by keyword matched against their names.
+
+</details>
+
+**Q4: What is a pytest fixture?**
+
+- A) Randomly generated test data
+- B) Reusable setup code injected into test functions via parameters
+- C) A replacement for assert statements
+- D) A way to mock network calls only
+
+<details><summary>Answer</summary>
+
+**B** — Fixtures set up reusable state. pytest injects them automatically when a test function has a matching parameter name.
+
+</details>
+
+
+## Exercises
+
+1. **Three tests for `word_count`.** Write test functions for: (a) a sentence with repeated words, (b) an empty string, (c) a string with punctuation.
+
+<details><summary>Solution</summary>
+
+```python
+def word_count(text):
+    counts = {}
+    for word in text.lower().split():
+        counts[word] = counts.get(word, 0) + 1
+    return counts
+
+def test_word_count_basic():
+    assert word_count("the cat sat on the mat") == {
+        "the": 2, "cat": 1, "sat": 1, "on": 1, "mat": 1
+    }
+
+def test_word_count_empty():
+    assert word_count("") == {}
+
+def test_word_count_punctuation():
+    # split() doesn't strip punctuation, so "hello," ≠ "hello"
+    result = word_count("hello, hello")
+    assert result == {"hello,": 1, "hello": 1}
+```
+
+</details>
+
+2. **Test a ValueError.** Write a test that verifies `create_note("")` raises `ValueError`. Use `pytest.raises`.
+
+<details><summary>Solution</summary>
+
+```python
+import pytest
+
+def create_note(title):
+    if not title or not title.strip():
+        raise ValueError("Title cannot be empty")
+    return {"title": title.strip()}
+
+def test_empty_title_raises():
+    with pytest.raises(ValueError):
+        create_note("")
+
+def test_whitespace_title_raises():
+    with pytest.raises(ValueError):
+        create_note("   ")
+```
+
+</details>
+
+3. **Fixture practice.** Write a `sample_store` fixture returning 2 note dicts, then write 2 tests that use it.
+
+<details><summary>Solution</summary>
+
+```python
+import pytest
+
+@pytest.fixture
+def sample_store():
+    return [
+        {"id": 1, "title": "Meeting Notes", "tags": ["work"]},
+        {"id": 2, "title": "Shopping List", "tags": ["personal"]},
+    ]
+
+def test_sample_store_count(sample_store):
+    assert len(sample_store) == 2
+
+def test_sample_store_has_title(sample_store):
+    assert sample_store[0]["title"] == "Meeting Notes"
+```
+
+Each test receives an independent copy — pytest calls the fixture fresh for every test function.
+
+</details>
+
+## Further Reading
+
+- [pytest documentation](https://docs.pytest.org/en/stable/) — official pytest docs with full fixture and assertion reference.
+- [Python `unittest` docs](https://docs.python.org/3/library/unittest.html) — Python's built-in testing framework (pytest is preferred, but `unittest` is worth knowing).
+
+---
 
 # Days 11–14: OOP, Search, and CLI with argparse
 
@@ -1017,6 +2063,111 @@ args = parser.parse_args()
 # Usage: python main.py add "Meeting" --tags work,urgent
 ```
 
+## Build: Nexus v1.0 — Full CLI
+
+Wire the `NoteStore` class and `argparse` into a complete, runnable CLI. Update `main.py`:
+
+```python
+# main.py — Nexus v1.0
+import argparse
+from nexus.models import Note
+from nexus.storage import load_notes, save_notes
+
+
+class NoteStore:
+    def __init__(self):
+        self._notes = []
+        self._next_id = 1
+
+    def add(self, title, content="", tags=None):
+        note = Note(self._next_id, title, content, tags)
+        self._notes.append(note)
+        self._next_id += 1
+        return note
+
+    def search(self, query):
+        return [n for n in self._notes if n.matches(query)]
+
+    def delete(self, note_id):
+        note = next((n for n in self._notes if n.id == note_id), None)
+        if note:
+            self._notes.remove(note)
+            return True
+        return False
+
+
+def build_parser():
+    parser = argparse.ArgumentParser(description="Nexus — personal note manager")
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    add_p = sub.add_parser("add", help="Add a note")
+    add_p.add_argument("title")
+    add_p.add_argument("--content", "-c", default="")
+    add_p.add_argument("--tags", "-t", default="")
+
+    sub.add_parser("list", help="List all notes")
+
+    search_p = sub.add_parser("search", help="Search notes")
+    search_p.add_argument("query")
+
+    delete_p = sub.add_parser("delete", help="Delete a note")
+    delete_p.add_argument("id", type=int)
+
+    return parser
+
+
+def main():
+    args = build_parser().parse_args()
+    data = load_notes()
+    store = NoteStore()
+    for d in data:
+        note = Note(d["id"], d["title"], d.get("content", ""), d.get("tags", []))
+        store._notes.append(note)
+        store._next_id = max(store._next_id, d["id"] + 1)
+
+    if args.command == "add":
+        tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+        note = store.add(args.title, args.content, tags)
+        save_notes([n.to_dict() for n in store._notes])
+        print(f"Created #{note.id}: {note.title}")
+    elif args.command == "list":
+        for note in store._notes:
+            tags = f" [{', '.join(note.tags)}]" if note.tags else ""
+            print(f"  [{note.id}] {note.title}{tags}")
+        if not store._notes:
+            print("No notes yet.")
+    elif args.command == "search":
+        results = store.search(args.query)
+        for note in results:
+            print(f"  [{note.id}] {note.title}")
+        if not results:
+            print("No matches found.")
+    elif args.command == "delete":
+        if store.delete(args.id):
+            save_notes([n.to_dict() for n in store._notes])
+            print(f"Deleted #{args.id}")
+        else:
+            print(f"Note #{args.id} not found")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+```bash
+# Try it:
+python main.py add "Sprint Notes" --content "Reviewed backlog" --tags work,urgent
+python main.py list
+python main.py search "sprint"
+python main.py delete 1
+```
+
+```bash
+git add nexus/ main.py
+git commit -m "Add NoteStore class with OOP architecture"
+git commit -m "Wire argparse CLI to NoteStore — Nexus v1.0"
+```
+
 ## Review: Days 11–14
 
 **Daily Checklist**
@@ -1027,22 +2178,161 @@ args = parser.parse_args()
 - [ ] I built a CLI with argparse subcommands
 - [ ] Nexus v1.0: add, list, search, delete via CLI
 
-> **🧠 Quiz**
->
-> **Q1: What does 'self' refer to?**
-> A) The class
-> B) The specific instance
-> C) The parent class
-> D) The module
-> ✅ Answer: B — The specific object the method is called on.
->
-> **Q2: What is a list comprehension?**
-> A) Understanding lists
-> B) Compact syntax to create lists from iterables
-> C) A linked list type
-> D) Sort method
-> ✅ Answer: B — e.g., [x for x in items if condition]
->
+### Quiz
+
+**Q1: What does 'self' refer to?**
+
+- A) The class
+- B) The specific instance
+- C) The parent class
+- D) The module
+
+<details><summary>Answer</summary>
+
+**B** — The specific object the method is called on.
+
+</details>
+
+**Q2: What is a list comprehension?**
+
+- A) Understanding lists
+- B) Compact syntax to create lists from iterables
+- C) A linked list type
+- D) Sort method
+
+<details><summary>Answer</summary>
+
+**B** — e.g., [x for x in items if condition]
+
+</details>
+
+**Q3: What does `@classmethod` mean?**
+
+- A) The method is private
+- B) The method receives the class (`cls`) as first argument instead of an instance
+- C) The method cannot be called on instances
+- D) The method is static
+
+<details><summary>Answer</summary>
+
+**B** — `cls` is the class itself, not an instance. Used for alternative constructors like `from_dict()`.
+
+</details>
+
+**Q4: What does `__repr__` control?**
+
+- A) How the object is saved to disk
+- B) How the object appears when printed or in the REPL
+- C) The object's string encoding
+- D) The object's comparison behaviour
+
+<details><summary>Answer</summary>
+
+**B** — `__repr__` defines the developer-facing string representation, essential for debugging.
+
+</details>
+
+
+## Exercises
+
+1. **`NoteStore` class.** Implement `NoteStore` with `add(title, content, tags)`, `find_by_id(note_id)`, `search(query)`, and `delete(note_id)` methods. Use the `Note` class from the reading.
+
+<details><summary>Solution</summary>
+
+```python
+from datetime import datetime
+
+class Note:
+    def __init__(self, note_id, title, content="", tags=None):
+        if not title.strip():
+            raise ValueError("Title cannot be empty")
+        self.id = note_id
+        self.title = title.strip()
+        self.content = content
+        self.tags = tags if tags is not None else []
+        self.created_at = datetime.now().isoformat()
+
+    def matches(self, query):
+        q = query.lower()
+        return q in self.title.lower() or q in self.content.lower()
+
+    def __repr__(self):
+        return f"Note({self.id}, '{self.title}')"
+
+class NoteStore:
+    def __init__(self):
+        self._notes = []
+        self._next_id = 1
+
+    def add(self, title, content="", tags=None):
+        note = Note(self._next_id, title, content, tags)
+        self._notes.append(note)
+        self._next_id += 1
+        return note
+
+    def find_by_id(self, note_id):
+        for note in self._notes:
+            if note.id == note_id:
+                return note
+        return None
+
+    def search(self, query):
+        return [n for n in self._notes if n.matches(query)]
+
+    def delete(self, note_id):
+        note = self.find_by_id(note_id)
+        if note:
+            self._notes.remove(note)
+            return True
+        return False
+```
+
+</details>
+
+2. **argparse parsing.** Write argparse code for `nexus add "Title" --content "..." --tags work,urgent` that prints the parsed title, content, and tags list.
+
+<details><summary>Solution</summary>
+
+```python
+import argparse
+
+parser = argparse.ArgumentParser(description="Nexus")
+sub = parser.add_subparsers(dest="command")
+
+add_p = sub.add_parser("add", help="Add a note")
+add_p.add_argument("title")
+add_p.add_argument("--content", "-c", default="")
+add_p.add_argument("--tags", "-t", default="")
+
+args = parser.parse_args()
+
+if args.command == "add":
+    tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+    print(f"Title:   {args.title}")
+    print(f"Content: {args.content}")
+    print(f"Tags:    {tags}")
+```
+
+Run: `python main.py add "Sprint Notes" --content "Review progress" --tags work,urgent`
+
+</details>
+
+3. **Filter objects by tag.** Given a list of `Note` objects, write a list comprehension returning only those tagged `"urgent"`.
+
+<details><summary>Solution</summary>
+
+```python
+urgent_notes = [note for note in notes if "urgent" in note.tags]
+```
+
+</details>
+
+## Further Reading
+
+- [Classes (Python Docs)](https://docs.python.org/3/tutorial/classes.html) — the official guide to `__init__`, instance methods, class methods, inheritance, and `__repr__`.
+- [argparse Tutorial (Python Docs)](https://docs.python.org/3/howto/argparse.html) — step-by-step guide to building CLIs with subcommands, positional arguments, and optional flags.
+
+---
 
 # Days 15–18: Decorators, Generators, and Virtual Environments
 
@@ -1082,6 +2372,34 @@ for line in read_large_file("big.txt"):
     process(line)  # only one line in memory
 ```
 
+## Reading: *args and **kwargs in Decorators
+
+You learned `*args` and `**kwargs` on Day 4. Here is why decorators depend on them.
+
+Without `*args`/`**kwargs`, a decorator wrapper would only work for functions with one specific signature. With them, a single decorator works on **any** function:
+
+```python
+import time
+
+def timer(func):
+    def wrapper(*args, **kwargs):       # accept whatever the original accepts
+        start = time.time()
+        result = func(*args, **kwargs)  # pass everything through unchanged
+        print(f"{func.__name__} took {time.time()-start:.4f}s")
+        return result
+    return wrapper
+
+@timer
+def search(store, query, case_sensitive=False):
+    return [n for n in store if query in n["title"]]
+
+@timer
+def save(path, data):
+    pass  # same decorator works on any signature
+```
+
+The `wrapper(*args, **kwargs)` pattern is the standard way to write decorators that don't interfere with the wrapped function's arguments.
+
 ## Reading: Virtual Environments
 
 A venv isolates your project’s dependencies from the system. Without it, projects share packages and version conflicts arise.
@@ -1115,22 +2433,140 @@ Set up venv and requirements.txt. Add a @timer decorator to search. Add export c
 - [ ] I know *args and **kwargs
 - [ ] Nexus has logging, export features, proper venv setup
 
-> **🧠 Quiz**
->
-> **Q1: What does @timer above a function do?**
-> A) Times the import
-> B) Wraps the function to add timing behavior
-> C) Limits execution time
-> D) Delays execution
-> ✅ Answer: B — Decorator wraps the function.
->
-> **Q2: What does yield do vs return?**
-> A) They're the same
-> B) yield produces a value and pauses, return exits
-> C) yield is faster
-> D) yield only works in classes
-> ✅ Answer: B — yield pauses the function, saving state for next call.
->
+### Quiz
+
+**Q1: What does @timer above a function do?**
+
+- A) Times the import
+- B) Wraps the function to add timing behavior
+- C) Limits execution time
+- D) Delays execution
+
+<details><summary>Answer</summary>
+
+**B** — Decorator wraps the function.
+
+</details>
+
+**Q2: What does yield do vs return?**
+
+- A) They're the same
+- B) yield produces a value and pauses, return exits
+- C) yield is faster
+- D) yield only works in classes
+
+<details><summary>Answer</summary>
+
+**B** — yield pauses the function, saving state for next call.
+
+</details>
+
+**Q3: What does `pip freeze` output?**
+
+- A) Installed package names only
+- B) Package names with pinned versions
+- C) Package source code
+- D) pip version
+
+<details><summary>Answer</summary>
+
+**B** — Names with pinned versions (e.g. `pytest==8.2.2`). Used to reproduce environments exactly via `requirements.txt`.
+
+</details>
+
+**Q4: Which correctly accepts any keyword arguments?**
+
+- A) `def f(*args)`
+- B) `def f(**kwargs)`
+- C) `def f(args={})`
+- D) `def f(kwargs=[])`
+
+<details><summary>Answer</summary>
+
+**B** — `**kwargs` collects keyword arguments into a dict. `*args` collects positional arguments into a tuple.
+
+</details>
+
+
+## Exercises
+
+1. **Retry decorator.** Write a `retry(times=3)` decorator factory that calls the decorated function up to `times` times if it raises an exception. Re-raise on the final failure.
+
+<details><summary>Solution</summary>
+
+```python
+def retry(times=3):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            last_exc = None
+            for attempt in range(1, times + 1):
+                try:
+                    return func(*args, **kwargs)
+                except Exception as e:
+                    last_exc = e
+                    print(f"Attempt {attempt} failed: {e}")
+            raise last_exc
+        return wrapper
+    return decorator
+
+@retry(times=3)
+def flaky():
+    import random
+    if random.random() < 0.7:
+        raise ConnectionError("Timeout")
+    return "OK"
+```
+
+`retry(times=3)` is a decorator *factory* — it returns the actual decorator. Three nested functions: factory → decorator → wrapper.
+
+</details>
+
+2. **Batch generator.** Write `note_chunks(notes, size)` that yields sublists of `size` items.
+
+```python
+for chunk in note_chunks(["n1","n2","n3","n4","n5"], 2):
+    print(chunk)
+# ['n1', 'n2']
+# ['n3', 'n4']
+# ['n5']
+```
+
+<details><summary>Solution</summary>
+
+```python
+def note_chunks(notes, size):
+    for i in range(0, len(notes), size):
+        yield notes[i:i + size]
+```
+
+`range(0, len(notes), size)` steps through in increments of `size`. The slice grabs each batch.
+
+</details>
+
+3. **Virtual environment setup.** Write the exact commands to create a venv, install `black` and `pytest`, and save `requirements.txt`.
+
+<details><summary>Solution</summary>
+
+```bash
+python -m venv venv
+source venv/bin/activate          # Mac/Linux
+# venv\Scripts\activate           # Windows
+
+pip install black pytest
+pip freeze > requirements.txt
+```
+
+`pip freeze` outputs every installed package (including transitive dependencies) with pinned versions. To reproduce later: `pip install -r requirements.txt`.
+
+</details>
+
+## Further Reading
+
+- [Python Decorators (Real Python)](https://realpython.com/primer-on-python-decorators/) — thorough walkthrough with practical examples.
+- [Python Generators (Real Python)](https://realpython.com/introduction-to-python-generators/) — how `yield` works under the hood.
+- [Python Virtual Environments Primer](https://realpython.com/python-virtual-environments-a-primer/) — why venvs matter and how to manage them.
+
+---
 
 # Phase 1 Complete: What You Have Built
 
